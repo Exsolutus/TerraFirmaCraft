@@ -15,6 +15,7 @@ import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.ProbabilityConfig;
 import net.minecraft.world.gen.placement.CaveEdgeConfig;
+import net.minecraft.world.gen.placement.NoPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 import net.minecraftforge.fml.RegistryObject;
@@ -101,7 +102,7 @@ public class TFCBiomes
         ROLLING_HILLS.get().setSurfaceBuilder(SurfaceBuilder.DEFAULT, SurfaceBuilder.GRASS_DIRT_SAND_CONFIG);
 
         addCarvers(BADLANDS);
-        BADLANDS.get().setSurfaceBuilder(SurfaceBuilder.BADLANDS, SurfaceBuilder.RED_SAND_WHITE_TERRACOTTA_GRAVEL_CONFIG);
+        BADLANDS.get().setSurfaceBuilder(SurfaceBuilder.WOODED_BADLANDS, SurfaceBuilder.RED_SAND_WHITE_TERRACOTTA_GRAVEL_CONFIG);
 
         addCarvers(PLATEAU);
         PLATEAU.get().setSurfaceBuilder(SurfaceBuilder.MOUNTAIN, SurfaceBuilder.GRASS_DIRT_SAND_CONFIG);
@@ -130,6 +131,12 @@ public class TFCBiomes
 
         addCarvers(RIVER);
         RIVER.get().setSurfaceBuilder(SurfaceBuilder.DEFAULT, SurfaceBuilder.SAND_CONFIG);
+
+        // Features applied to ALL biomes
+        for (RegistryObject<? extends Biome> biome : ALL_BIOMES)
+        {
+            biome.get().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, TFCFeatures.VEINS.get().withConfiguration(NoFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG)));
+        }
     }
 
     public static void addCarvers(RegistryObject<? extends Biome> biomeIn)
@@ -137,7 +144,7 @@ public class TFCBiomes
         biomeIn.get().addCarver(GenerationStage.Carving.AIR, Biome.createCarver(TFCWorldCarvers.CAVE.get(), new ProbabilityConfig(0.10f)));
         biomeIn.get().addCarver(GenerationStage.Carving.AIR, Biome.createCarver(TFCWorldCarvers.CANYON.get(), new ProbabilityConfig(0.015f)));
 
-        biomeIn.get().addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, TFCFeatures.LARGE_CAVE_SPIKES.get().withConfiguration(NoFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.CARVING_MASK.configure(new CaveEdgeConfig(GenerationStage.Carving.AIR, 0.03f))));
+        biomeIn.get().addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, TFCFeatures.LARGE_CAVE_SPIKES.get().withConfiguration(NoFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.CARVING_MASK.configure(new CaveEdgeConfig(GenerationStage.Carving.AIR, 0.02f))));
         biomeIn.get().addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, TFCFeatures.CAVE_SPIKES.get().withConfiguration(NoFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.CARVING_MASK.configure(new CaveEdgeConfig(GenerationStage.Carving.AIR, 0.09f))));
     }
 
@@ -150,7 +157,7 @@ public class TFCBiomes
         //biomeIn.get().addCarver(GenerationStage.Carving.LIQUID, Biome.createCarver(TFCWorldCarvers.UNDERWATER_CANYON.get(), new ProbabilityConfig(0.02f)));
         //biomeIn.get().addCarver(GenerationStage.Carving.LIQUID, Biome.createCarver(TFCWorldCarvers.UNDERWATER_CAVE.get(), new ProbabilityConfig(0.06666667f)));
 
-        biomeIn.get().addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, TFCFeatures.LARGE_CAVE_SPIKES.get().withConfiguration(NoFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.CARVING_MASK.configure(new CaveEdgeConfig(GenerationStage.Carving.AIR, 0.02f))));
+        biomeIn.get().addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, TFCFeatures.LARGE_CAVE_SPIKES.get().withConfiguration(NoFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.CARVING_MASK.configure(new CaveEdgeConfig(GenerationStage.Carving.AIR, 0.015f))));
         biomeIn.get().addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, TFCFeatures.CAVE_SPIKES.get().withConfiguration(NoFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.CARVING_MASK.configure(new CaveEdgeConfig(GenerationStage.Carving.AIR, 0.08f))));
     }
 }
